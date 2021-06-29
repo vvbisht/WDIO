@@ -1,12 +1,12 @@
 const SignUpPage = require('../pageobjects/signup.page');
 const LoginPage = require('../pageobjects/login.page');
+const GamePage =  require('../pageobjects/games.page')
+const loginData = require('../testdata/logindata')
 
 describe('My Login application', () => {
     it('should login with valid credentials', async () => {
-        await SignUpPage.open();
-        await LoginPage.login("vv.bisht003@hotmail.com","vv@vicky93");
-        await browser.pause(5000)
-       
+        await LoginPage.open();
+        await LoginPage.login(loginData.username,loginData.password);       
     });
 });
 
