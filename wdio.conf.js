@@ -1,9 +1,16 @@
 const commands = require('./test/customcommands/newcommand.js')
+const url = require('./env')
+const ENV = process.env.ENV
+if(!ENV || !['qa','prod'].includes(ENV))
+{
+    console.log('please enter a valid environment')
+    process.exit();
+}
 exports.config = {
 
     suites: {
         login: [
-            './test/specs/login.js',
+            './test/specs/login.js'
         ]
     },
     //
@@ -31,7 +38,8 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './test/specs/**/login.js'
+        './test/specs/**/login.js',
+        './test/specs/**/signup.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -104,7 +112,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://www.playstation.com/en-in/',
+    baseUrl: url[process.env.ENV],
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -151,7 +159,7 @@ exports.config = {
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 600000
     },
     //
     // =====

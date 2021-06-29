@@ -1,5 +1,4 @@
 const Page = require('./page');
-const waitVisible = require('../customcommands/elementCommands');
 //import {waitVisible} from '../customcommands/elementCommands'
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -14,13 +13,21 @@ class SignUpPage extends Page {
     get selectDay() { return $("//div/select[@title='Day']")}
     get selectMonth() { return $("//div/select[@title='Month']")}
     get selectyear() { return $("//div/select[@title='Year']")}
+    get btnNext() {return $("//div/button[@class='next-button text-button']/div")}
+    get selectRegion() {return $("//div/select[@title='Country/Region']")}
+    get emailAddress() {return $("//div/input[@placeholder='Email Address']")}
+    get password() {return $("//div/input[@placeholder='Password']")}
+    get renterPassword () {$("//div/input[@placeholder='Re-enter Password']")}
+
+
+
 
    
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
-    async create () {
+    async create (day, month, year, country) {
 
         console.log("Hello this should print")
         //await (await this.btnSignIn).isDisplayed();
@@ -30,7 +37,13 @@ class SignUpPage extends Page {
         //await (await this.btnSignIn).click();
         await (await this.btnCreateAccount).click();
         await (await this.btnCreate).click();
-        await (await this.selectDay).selectByVisibleText('29');
+        await (await this.selectDay).selectByVisibleText(day);
+        await (await this.selectMonth).selectByVisibleText(month);
+        await (await this.selectyear).selectByVisibleText(year);
+        await browser.checkAndClick(this.btnNext);
+        await (await this.selectRegion).selectByVisibleText(country);
+
+
 
       
     }
@@ -38,9 +51,7 @@ class SignUpPage extends Page {
     /**
      * overwrite specifc options to adapt it to page object
      */
-    open () {
-        return  super.open('');
-    }
+
 }
 
 module.exports = new SignUpPage();
